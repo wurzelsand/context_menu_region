@@ -11,29 +11,61 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Use it to add a context menu to a widget
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add to **pubspec.yaml**:
+
+```yaml
+context_menu_region:
+  git: 
+    url: https://github.com/wurzelsand/context_menu_region.git
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
 ```dart
-const like = 'sample';
+import 'package:context_menu_region/context_menu_region.dart';
+
+...
+
+return MaterialApp(
+  home: Scaffold(
+    body: Center(
+      child: ContextMenuRegion(
+        contextMenuBuilder: (BuildContext context, Offset offset) {
+          // The custom context menu will look like the default context menu
+          // on the current platform
+          return AdaptiveTextSelectionToolbar.buttonItems(
+            anchors: TextSelectionToolbarAnchors(
+              primaryAnchor: offset,
+            ),
+            buttonItems: const <ContextMenuButtonItem>[
+              ContextMenuButtonItem(
+                onPressed: ContextMenuController.removeAny,
+                label: 'Info',
+              ),
+              ContextMenuButtonItem(
+                onPressed: ContextMenuController.removeAny,
+                label: 'Copy',
+              ),
+            ],
+          );
+        },
+        child: Container(
+          color: Colors.yellow,
+          width: 100,
+          height: 100,
+        ),
+      ),
+    ),
+  ),
+);
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Taken from this official flutter [example](https://api.flutter.dev/flutter/widgets/ContextMenuController-class.html).
